@@ -15,7 +15,7 @@ namespace Exercise02 {
                 
             }
 
-            //ヤードからメートルへの対応表を出力
+            ////ヤードからメートルへの対応表を出力
             //static void PrintYardToMeterList(int yard) {
             //    Console.Write("変更前（ヤード）："); //コンソール入力
             //    int yard = int.Parse(Console.ReadLine());　//文字列で取り込んで整数へ変換
