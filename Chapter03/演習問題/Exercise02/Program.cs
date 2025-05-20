@@ -41,9 +41,9 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_2(List<string> names) {
-
+            var count = names.Count(names => names.ToString().Contains('o'));
+            Console.WriteLine(count);
             //names.Count(ここにラムダ式を記述する)
-
         }
 
         private static void Exercise2_3(List<string> names) {
