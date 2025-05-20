@@ -49,13 +49,19 @@ namespace Exercise02 {
 
         private static void Exercise2_3(List<string> names) {
             var selected = names.Where(s => s.Contains('o')).ToArray();
-            foreach (var item in selected) {
-                Console.WriteLine(item);
+            foreach (var name in selected) {
+                Console.WriteLine(name);
             }
         }
 
         private static void Exercise2_4(List<string> names) {
+            var selected = names.Where(s => s.StartsWith('B'))  //var obj
+                                .Select(s => s.Length);
+                                //.Select(s => new { s, s.Length });
 
+            foreach (var count in selected) {
+                Console.WriteLine(count);  //(data.s + ":" + data.Length + "文字")
+            }
         }
     }
 }
