@@ -50,11 +50,12 @@ namespace Exercise01 {
         }
 
         private static void Exercise4(List<int> numbers) {
-            var selected = numbers.Select(n => n * 2)
-                                  .ToList();
-            foreach (var item in selected) {
-                Console.WriteLine(item);
-            }
+            numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);
+            //var selected = numbers.Select(n => n * 2)
+            //                      .ToList();
+            //foreach (var item in selected) {
+            //    Console.WriteLine(item);
+            //}
         }
     }
 }
