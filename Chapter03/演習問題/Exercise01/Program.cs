@@ -34,13 +34,19 @@ namespace Exercise01 {
 
         private static void Exercise2(List<int> numbers) {
             numbers.ForEach(n => Console.WriteLine(n / 2.0));
+
+            //別解
+            //foreach (var n in numbers) {
+            //    Console.WriteLine(n / 2.0);
+            //}
         }
 
         private static void Exercise3(List<int> numbers) {
-            var selected = numbers.Where(n => n >= 50);
-            foreach (var item in selected) {
-                Console.WriteLine(item);
-            }
+            numbers.Where(n => n >= 50).ToList().ForEach(Console.WriteLine);
+            //var selected = numbers.Where(n => n >= 50);
+            //foreach (var item in selected) {
+            //    Console.WriteLine(item);
+            //}
         }
 
         private static void Exercise4(List<int> numbers) {
