@@ -32,11 +32,15 @@ namespace Exercise01 {
         }
 
         private static void Exercise3(int[] numbers) {
-            
+            //P.172
+            foreach (var n in numbers.Select(n => n.ToString("000")).ToList()) {
+                Console.WriteLine(n);
+            }
+
         }
 
         private static void Exercise4(int[] numbers) {
-            
+            //P.172
         }
 
         private static void Exercise5(int[] numbers) {
