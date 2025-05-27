@@ -25,7 +25,10 @@ namespace Exercise01 {
         }
 
         private static void Exercise2(int[] numbers) {
-            //P.169
+            //P.169以降
+            foreach (var n in numbers.Skip(numbers.Length - 2)) {
+                Console.WriteLine(n);
+            }
         }
 
         private static void Exercise3(int[] numbers) {
