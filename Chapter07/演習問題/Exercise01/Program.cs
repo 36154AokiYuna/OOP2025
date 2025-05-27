@@ -22,6 +22,7 @@ namespace Exercise01 {
 
         private static void Exercise1(int[] numbers) {
             Console.WriteLine(numbers.Max());
+            Console.WriteLine();
         }
 
         private static void Exercise2(int[] numbers) {
@@ -29,6 +30,7 @@ namespace Exercise01 {
             foreach (var n in numbers.Skip(numbers.Length - 2)) {
                 Console.WriteLine(n);
             }
+            Console.WriteLine();
         }
 
         private static void Exercise3(int[] numbers) {
@@ -36,11 +38,15 @@ namespace Exercise01 {
             foreach (var n in numbers.Select(n => n.ToString("000")).ToList()) {
                 Console.WriteLine(n);
             }
-
+            Console.WriteLine();
         }
 
         private static void Exercise4(int[] numbers) {
             //P.172
+            foreach (var n in numbers.OrderBy(n => n).Take(3)) {
+                Console.WriteLine(n);
+            }
+            Console.WriteLine();
         }
 
         private static void Exercise5(int[] numbers) {
