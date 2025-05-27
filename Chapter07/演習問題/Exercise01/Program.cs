@@ -39,11 +39,17 @@ namespace Exercise01 {
         }
 
         private static void Exercise3(int[] numbers) {
-            //P.172以降
-            foreach (var n in numbers.Select(n => n.ToString("000")).ToList()) {
+            //P.173 ゼロサプレス
+            foreach (var n in numbers.Select(n => n.ToString("000"))) {
                 Console.WriteLine(n);
             }
             Console.WriteLine();
+
+            //Selectはこの方が良い
+            //var strs = numbers.Select(n => n.ToString("000"));
+            //foreach (var s in strs) {
+            //    Console.WriteLine(s);
+            //}
         }
 
         private static void Exercise4(int[] numbers) {
@@ -52,6 +58,8 @@ namespace Exercise01 {
                 Console.WriteLine(n);
             }
             Console.WriteLine();
+
+            //Order()でも出来る
         }
 
         private static void Exercise5(int[] numbers) {
