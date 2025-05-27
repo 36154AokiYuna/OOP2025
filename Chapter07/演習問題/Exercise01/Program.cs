@@ -31,10 +31,15 @@ namespace Exercise01 {
                 Console.WriteLine(n);
             }
             Console.WriteLine();
+
+            //別解
+            //foreach (var n in numbers.TakeLast(2)) {
+            //    Console.WriteLine(n);
+            //}
         }
 
         private static void Exercise3(int[] numbers) {
-            //P.172
+            //P.172以降
             foreach (var n in numbers.Select(n => n.ToString("000")).ToList()) {
                 Console.WriteLine(n);
             }
@@ -42,7 +47,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise4(int[] numbers) {
-            //P.172
+            //P.172以降
             foreach (var n in numbers.OrderBy(n => n).Take(3)) {
                 Console.WriteLine(n);
             }
@@ -50,7 +55,8 @@ namespace Exercise01 {
         }
 
         private static void Exercise5(int[] numbers) {
-            
+            //P.172以降
+            Console.WriteLine(numbers.Distinct().Count(n => n > 10));
         }
     }
 }
