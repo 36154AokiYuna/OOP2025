@@ -39,6 +39,11 @@ namespace Exercise02 {
             books.Where(s => s.Title.Contains("ワンダフル・C#ライフ")).ToList()
                   .ForEach(s => Console.WriteLine($"{s.Price} : {s.Pages}"));
             Console.WriteLine("");
+
+            //正しい解答
+            //var book = books.FirstOrDefault(b => b.Title == "");
+            //if (book is not null)
+            //    Console.WriteLine("{0} {1}", book.Price, book.Pages);
         }
         
 
@@ -54,15 +59,20 @@ namespace Exercise02 {
         }
 
         private static void Exercise4(List<Book> books) {
-            
+            var book = books.FirstOrDefault(b => b.Price >= 4000);
+            if (book is not null)
+                Console.WriteLine(book.Title);
+            Console.WriteLine("");
         }
 
         private static void Exercise5(List<Book> books) {
-            
+
+            Console.WriteLine("");
         }
 
         private static void Exercise6(List<Book> books) {
-            
+
+            Console.WriteLine("");
         }
 
         private static void Exercise7(List<Book> books) {
