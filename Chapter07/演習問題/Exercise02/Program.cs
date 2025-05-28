@@ -38,14 +38,17 @@ namespace Exercise02 {
         private static void Exercise1(List<Book> books) {
             books.Where(s => s.Title.Contains("ワンダフル・C#ライフ")).ToList()
                   .ForEach(s => Console.WriteLine($"{s.Price} : {s.Pages}"));
+            Console.WriteLine("");
         }
+        
 
         private static void Exercise2(List<Book> books) {
-            
+            Console.WriteLine(books.Count(s => s.Title.Contains("C#")));
+            Console.WriteLine("");
         }
 
         private static void Exercise3(List<Book> books) {
-            
+            Console.WriteLine("");
         }
 
         private static void Exercise4(List<Book> books) {
