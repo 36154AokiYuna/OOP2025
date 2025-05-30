@@ -41,7 +41,7 @@ namespace Exercise02 {
             Console.WriteLine("");
 
             //正しい解答
-            //var book = books.FirstOrDefault(b => b.Title == "");
+            //var book = books.FirstOrDefault(b => b.Title == "ワンダフル・C#ライフ");
             //if (book is not null)
             //    Console.WriteLine("{0} {1}", book.Price, book.Pages);
         }
@@ -85,6 +85,13 @@ namespace Exercise02 {
                 Console.WriteLine($"{item.Title} : {item.Price}");
             }
             Console.WriteLine("");
+
+            //模範解答
+            //var selected = books.Where(b => b.Pages >= 400)
+            //                    .OrderByDescending(b => b.Price);
+            //foreach (var book in selected) {
+            //    Console.WriteLine("{0} {1}", book.Title, book.Price);
+            //}
         }
 
         private static void Exercise7(List<Book> books) {
@@ -92,6 +99,13 @@ namespace Exercise02 {
             foreach (var item in selected) {
                 Console.WriteLine(item.Title);
             }
+
+            //模範解答
+            //var selected = books.Where(b => b.Title.Contains("C#") && b.Pages <= 500)
+            //                    .Select(b => b.Title);
+            //foreach (var title in selected) {
+            //    Console.WriteLine(title);
+            //}
         }
     }
 }
