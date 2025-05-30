@@ -22,20 +22,23 @@ namespace Exercise03 {
 
         private static void Exercise1(string text) {
             Console.WriteLine("空白数：" + text.Count(s => s == ' '));
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         private static void Exercise2(string text) {
             Console.WriteLine(text.Replace("big", "small"));
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         private static void Exercise3(string text) {
-            
+
+            Console.WriteLine();
         }
 
         private static void Exercise4(string text) {
-            
+            var words = text.Split(' ');
+            Console.WriteLine("単語数：" + words.Count());
+            Console.WriteLine();
         }
 
         private static void Exercise5(string text) {
