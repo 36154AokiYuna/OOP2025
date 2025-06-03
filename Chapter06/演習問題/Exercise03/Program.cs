@@ -36,6 +36,19 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
+            var words = text.Split(' ');
+            var sb = new StringBuilder();
+
+            //for (int i = 0; i < words.Length - 1; i++) {
+            //    sb.Append(words[i] + ' ');
+            //}
+            //Console.WriteLine(sb.Append(words[words.Length-1] + '.'));
+
+            foreach (var word in words) {
+                sb.Append(word + ' ');
+            }
+            var str = sb.ToString();
+            Console.WriteLine(str.TrimEnd() + '.');
             Console.WriteLine();
         }
 
