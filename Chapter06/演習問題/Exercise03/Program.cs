@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
@@ -23,6 +25,9 @@ namespace Exercise03 {
         private static void Exercise1(string text) {
             Console.WriteLine("空白数：" + text.Count(c => c == ' '));
             Console.WriteLine();
+
+            //別解
+            //var spaces = text.Count(char.IsWhiteSpace);
         }
 
         private static void Exercise2(string text) {
@@ -31,7 +36,6 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
-
             Console.WriteLine();
         }
 
@@ -39,6 +43,10 @@ namespace Exercise03 {
             var words = text.Split(' ');
             Console.WriteLine("単語数：" + words.Count());
             Console.WriteLine();
+
+            //別解
+            //var count = text.Split(' ').Length:
+            //Console.WriteLine("単語数：{0}",count);
         }
 
         private static void Exercise5(string text) {
