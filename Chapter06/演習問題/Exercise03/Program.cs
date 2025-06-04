@@ -20,6 +20,16 @@ namespace Exercise03 {
 
             Console.WriteLine("6.3.5");
             Exercise5(text);
+
+            Console.WriteLine("6.3.99");
+            Exercise6(text);
+        }
+
+        private static void Exercise6(string text) {
+            var str = text.Replace(" ","").ToLower();
+            for(char c = 'a'; c <= 'z'; c++) {
+                Console.WriteLine(c + ":" + str.Count(s => s == c));
+            }
         }
 
         private static void Exercise1(string text) {
@@ -50,6 +60,15 @@ namespace Exercise03 {
             var str = sb.ToString();
             Console.WriteLine(str.TrimEnd() + '.');
             Console.WriteLine();
+
+            //模範解答
+            //var array = text.Split(' ');
+            //var sb = new StringBuilder(array[0]);
+            //foreach (var word in array.Skip(1)) {
+            //    sb.Append(" ");
+            //    sb.Append(word);
+            //}
+            //Console.WriteLine(sb + ".");
         }
 
         private static void Exercise4(string text) {
@@ -67,6 +86,7 @@ namespace Exercise03 {
             foreach (var word in words.Where(s => s.Length <= 4)) {
                 Console.WriteLine(word);
             }
+            Console.WriteLine();
         }
     }
 }
