@@ -1,4 +1,5 @@
 ﻿
+using System.Data.SqlTypes;
 using System.Text;
 
 namespace Exercise03 {
@@ -30,6 +31,38 @@ namespace Exercise03 {
             for(char c = 'a'; c <= 'z'; c++) {
                 Console.WriteLine(c + ":" + str.Count(s => s == c));
             }
+
+            //別解 (辞書を使用)
+            //var str = text.ToLower().Replace(" ","");
+
+            //var alphDicCount = Enumerable.Range('a', 26)
+            //                    .ToDictionary(num => ((char)num).ToString(),num => 0);
+
+            //foreach (var alph in str) {
+            //    alphDicCount[alph.ToString()]++;
+            //}
+
+            //foreach (var item in alphDicCount) {
+            //    Console.WriteLine($"{item.Key}:{item.Value}");
+            //}
+
+
+            //別解 (配列で集計)
+            //var array = Enumerable.Repeat(0, 26).ToArray();
+
+            //foreach (var alph in str) {
+            //    array[alph - 'a']++;
+            //}
+
+            //for (char ch = 'a'; ch < 'z'; ch++) {
+            //    Console.WriteLine($"{ch}:{array[ch-'a']}");
+            //}
+
+
+            //('a'から順にカウントして出力)
+            //for (char ch = 'a'; ch <= 'z'; ch++) {
+            //    Console.WriteLine($"{ch}:{text.Count(tc => tc == ch)}");
+            //}
         }
 
         private static void Exercise1(string text) {
