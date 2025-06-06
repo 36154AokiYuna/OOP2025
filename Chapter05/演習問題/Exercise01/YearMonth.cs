@@ -19,9 +19,9 @@ namespace Exercise01 {
         //5.1.2
         //設定されている西暦が２１世紀か判定する
         //Yearが2001～2100年の間ならtrue、それ以外ならfalseを返す
-        public bool Is21Century => 
+        public bool Is21Century(int year) => 2001 <= year && year <= 2100;
 
-        
+
         //5.1.3
         public YearMonth AddOneMonth() {
 
