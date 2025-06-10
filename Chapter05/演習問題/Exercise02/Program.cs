@@ -32,6 +32,13 @@ namespace Exercise02 {
 
         //5.2.3
         //ここにメソッドを作成【メソッド名:FindFirst21C】
+        private static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
+            foreach (var item in ymCollection) {
+                if (item.Is21Century)
+                    return item;
+            }
+            return null;
+        }
 
 
         //5.2.4
