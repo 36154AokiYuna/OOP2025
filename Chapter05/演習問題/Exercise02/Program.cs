@@ -43,7 +43,11 @@ namespace Exercise02 {
 
         //5.2.4
         private static void Exercise4(YearMonth[] ymCollection) {
-            
+            if (FindFirst21C(ymCollection) is null) {
+                Console.WriteLine("21世紀のデータはありません");
+            } else {
+                Console.WriteLine(FindFirst21C(ymCollection));
+            }
         }
 
         //5.2.5
