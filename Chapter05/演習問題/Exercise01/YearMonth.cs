@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace Exercise01 {
     //5.1.1
-    public class YearMonth {
-        public int Year { get; init; }
-        public int Month { get; init; }
+    public record YearMonth(int year, int month) {
+        public int Year { get; init; } = year;
+        public int Month { get; init; } = month;
         
-        public YearMonth(int year, int month) {
-            Year = year;
-            Month = month;
-        }
 
         //5.1.2
         //設定されている西暦が２１世紀か判定する
@@ -31,6 +27,6 @@ namespace Exercise01 {
         }
 
         //5.1.4
-        public override string ToString() => $"{Year}年{Month}月";
+        public override string ToString() =>　$"{Year}年{Month}月";
     }
 }

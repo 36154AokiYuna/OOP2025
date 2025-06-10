@@ -48,11 +48,19 @@ namespace Exercise02 {
             } else {
                 Console.WriteLine(FindFirst21C(ymCollection));
             }
+
+            //別解(null合体演算子)
+            //var ym = FindFirst21C(ymCollection);
+            //var data = FindFirst21C(ymCollection).ToString() ?? "21世紀のデータはありません";
+            //Console.WriteLine(data);
+
+            //別解(null合体演算子、null条件演算子)
+            //Console.WriteLine(FindFirst21C(ymCollection)?.ToString() ?? "21世紀のデータはありません");
         }
 
         //5.2.5
         private static void Exercise5(YearMonth[] ymCollection) {
-            var array = ymCollection.Select(ym => ym.AddOneMonth());
+            var array = ymCollection.Select(ym => ym.AddOneMonth()).ToArray();
             foreach (var item in array) {
                 Console.WriteLine(item);
             }
