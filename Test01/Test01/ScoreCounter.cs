@@ -7,16 +7,16 @@
             _score = ReadScore(filePath);
         }
 
-        //メソッドの概要：点数データを読み込み、Studentオブジェクトのリストを返す 
+        //メソッドの概要：点数データを読み込み、Scoreオブジェクトのリストを返す 
         private static IEnumerable<Student> ReadScore(string filePath) {
-            
+            //点数データを入れるリストオブジェクトを生成
             var scores = new List<Student>();
-            
+            //ファイルを一気に読み込み
             string[] lines = File.ReadAllLines(filePath);
-
+            //読み込んだ行数分繰り返し
             foreach (var line in lines) {
                 string[] items = line.Split(',');
-                
+                //Scoreオブジェクトを生成
                 var score = new Student() {
                     Name = items[0],
                     Subject = items[1],
