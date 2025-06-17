@@ -8,6 +8,23 @@
             abbrs.Add("IOC", "国際オリンピック委員会");
             abbrs.Add("NPT", "核兵器不拡散条約");
 
+            //8.2.2(Countの呼び出し例)
+            //上のメソッドで、２つのオブジェクトを追加しているので、読み込んだ単語数+2が、Countの値になる
+            var count = abbrs.Count;
+            Console.WriteLine(abbrs.Count);
+            Console.WriteLine();
+
+            //8.2.2(Removeの呼び出し例)
+            if(abbrs.Remove("NPT")) {
+                Console.WriteLine(abbrs.Count);
+            }
+
+            //既に削除してあるので、falseが返る
+            if(!abbrs.Remove("NPT")) {
+                Console.WriteLine("削除できません");
+            }
+            Console.WriteLine();
+
             // Getメソッドの利用例
             var names = new[] { "WHO", "FIFA", "NPT", };
             foreach (var name in names) {
