@@ -44,7 +44,6 @@ namespace Exercise02 {
             return nextweek.AddDays(days);
         }
 
-
         private static void Exercise2() {
             var birthday = new DateOnly(2001, 4, 19);
             var targetDay = new DateOnly(2030, 4, 18);
@@ -54,9 +53,11 @@ namespace Exercise02 {
 
         // 9.2.2【ここにプログラムを作成する】
         static int GetAge(DateOnly birthday, DateOnly targetDay) {
-
-
-            return 0;
+            var age = targetDay.Year - birthday.Year;
+            if(targetDay < birthday.AddYears(age)) {
+                age--;
+            }
+            return age;
         }
     }
 }
