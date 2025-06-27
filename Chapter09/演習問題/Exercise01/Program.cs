@@ -26,9 +26,13 @@ namespace Exercise01 {
         private static void DisplayDatePattern3(DateTime dateTime) {
             var culture = new CultureInfo("ja-JP");
             culture.DateTimeFormat.Calendar = new JapaneseCalendar();
-            var s3 = dateTime.ToString("gg y年 M月 d日", culture);
+            var s3 = dateTime.ToString("ggyy年MM月dd日", culture);
             var dayOfWeek = culture.DateTimeFormat.GetDayName(dateTime.DayOfWeek);
             Console.WriteLine($"{s3}({dayOfWeek})");
+
+            //和暦２桁表示(ゼロサプレスあり)
+            var cul = dateTime.ToString("gg",culture);
+            var year = int.Parse(dateTime.ToString("yy", culture));
         }
     }
 }
