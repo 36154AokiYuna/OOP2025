@@ -32,7 +32,7 @@ namespace CarReportSystem {
                 Picture = pbPicture.Image,
             };
             listCarReports.Add(carReport);
-            setObAuthor(cbAuthor.Text);
+            setObAuthor(cbAuthor.Text); //コンボボックスへ登録
             setCbCarName(cbCarName.Text);
             InputItemsAllClear(); //登録後は項目をクリア
         }
@@ -116,7 +116,7 @@ namespace CarReportSystem {
 
         //新規入力のイベントハンドラ
         private void btNewRecord_Click(object sender, EventArgs e) {
-            
+            InputItemsAllClear();
         }
 
         //修正ボタンのイベントハンドラ
@@ -126,7 +126,14 @@ namespace CarReportSystem {
 
         //削除ボタンのイベントハンドラ
         private void btRecordDelete_Click(object sender, EventArgs e) {
+            //カーレポート管理用リストから該当するデータを削除する
+            var index = dgvRecord.CurrentRow.Index;
+            listCarReports.RemoveAt(index);
+            InputItemsAllClear();
+        }
 
+        private void Form1_Load(object sender, EventArgs e) {
+            InputItemsAllClear();
         }
     }
 }
