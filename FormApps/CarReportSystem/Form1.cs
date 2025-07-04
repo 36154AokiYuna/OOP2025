@@ -121,15 +121,26 @@ namespace CarReportSystem {
 
         //修正ボタンのイベントハンドラ
         private void btRecordModify_Click(object sender, EventArgs e) {
+            var index = dgvRecord.CurrentRow.Index;
+            listCarReports[index].Date = dtpDate.Value;
+            listCarReports[index].Author = cbAuthor.Text;
+            listCarReports[index].Maker = GetRadioButtonMaker();
+            listCarReports[index].CarName = cbCarName.Text;
+            listCarReports[index].Report = tbReport.Text;
+            listCarReports[index].Picture = pbPicture.Image;
 
+            dgvRecord.Refresh(); //データグリッドビューの更新
         }
 
         //削除ボタンのイベントハンドラ
         private void btRecordDelete_Click(object sender, EventArgs e) {
             //カーレポート管理用リストから該当するデータを削除する
-            var index = dgvRecord.CurrentRow.Index;
-            listCarReports.RemoveAt(index);
-            InputItemsAllClear();
+            //選択されているインデックスを取得
+            if(dgvRecord.Rows.Count > 0) {
+                var index = dgvRecord.CurrentRow.Index;
+                listCarReports.RemoveAt(index);
+                InputItemsAllClear();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e) {
