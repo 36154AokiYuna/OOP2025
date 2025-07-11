@@ -20,7 +20,7 @@ namespace Section01 {
 
             //var options = new JsonSerializerOptions {
             //    WriteIndented = true,
-            //    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            //    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             //};
             //string jsonString = JsonSerializer.Serialize(novels, options);
             //Console.WriteLine(jsonString);
