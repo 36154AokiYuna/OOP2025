@@ -83,10 +83,23 @@ namespace Exercise01 {
         //File.WriteAllBytes(CallerFilePathAttribute,utf8Bytes);
 
         //12.1.3
+        //自分の回答
+        //static Employee[] Deserialize_f(string filePath) {
+        //    var text = File.ReadAllText(filePath);
+        //    var empd = JsonSerializer.Deserialize<Employee[]>(text);
+        //    return empd;
+        //}
+
+        //模範解答
         static Employee[] Deserialize_f(string filePath) {
+            var options = new JsonSerializerOptions {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                WriteIndented = true,
+            };
             var text = File.ReadAllText(filePath);
-            var empd = JsonSerializer.Deserialize<Employee[]>(text);
-            return empd;
+            var employees = JsonSerializer.Deserialize<Employee[]>(text,options);
+            return employees;
         }
     }
 
