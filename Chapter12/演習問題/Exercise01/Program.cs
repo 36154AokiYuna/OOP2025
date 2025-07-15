@@ -30,6 +30,11 @@ namespace Exercise01 {
                 },
             ];
             Serialize("employees.json", employees);
+
+            //12.1.3
+            var empdata = Deserialize_f("employees.json");
+            foreach (var empd in empdata)
+                Console.WriteLine(empd);
         }
 
         //12.1.1
@@ -65,8 +70,15 @@ namespace Exercise01 {
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             };
-            string jsonString = JsonSerializer.Serialize(filePath, options);
+            string jsonString = JsonSerializer.Serialize(employees, options);
             File.WriteAllText(filePath, jsonString);
+        }
+
+        //12.1.3
+        static Employee[] Deserialize_f(string filePath) {
+            var text = File.ReadAllText(filePath);
+            var empd = JsonSerializer.Deserialize<Employee[]>(text);
+            return empd;
         }
     }
 
