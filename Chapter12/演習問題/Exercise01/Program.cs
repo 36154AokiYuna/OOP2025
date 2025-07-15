@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Unicode;
 using System.Text.Encodings.Web;
+using System.Runtime.CompilerServices;
 
 namespace Exercise01 {
     internal class Program {
@@ -65,6 +66,8 @@ namespace Exercise01 {
         }
 
         //12.1.2
+        //シリアル化してファイルへ出力する
+        //自分の回答
         static void Serialize(string filePath, IEnumerable<Employee> employees) {
             var options = new JsonSerializerOptions {
                 WriteIndented = true,
@@ -73,6 +76,11 @@ namespace Exercise01 {
             string jsonString = JsonSerializer.Serialize(employees, options);
             File.WriteAllText(filePath, jsonString);
         }
+
+        //模範解答
+        //optionsの中に PropertyNamingPolicy = JsonNamingPolicy.CamelCase, 追加
+        //byte[] utf8Bytes = JsonSerializer.SerializeToUtf8Bytes(employees, options);
+        //File.WriteAllBytes(CallerFilePathAttribute,utf8Bytes);
 
         //12.1.3
         static Employee[] Deserialize_f(string filePath) {
