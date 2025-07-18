@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -36,11 +37,63 @@ namespace RSSReader {
                 //    lbTitles.Items.Add(item.Title);
                 //}
             }
+
+            //リストボックスの背景色を交互に変更
+            //if (items % 2 == 0) {
+            //    lbTitles.BackColor = Color.LightGray;
+            //}
+
         }
 
         //タイトルを選択（クリック）したときに呼ばれるイベントハンドラ
         private void lbTitles_Click(object sender, EventArgs e) {
-            webView21.Source = new Uri(items[lbTitles.SelectedIndex].Link);
+            wvRssLink.Source = new Uri(items[lbTitles.SelectedIndex].Link ?? "https://www.yahoo.co.jp/");
+        }
+
+
+
+        //戻るボタン
+        private void button1_Click(object sender, EventArgs e) {
+            wvRssLink.GoBack();
+        }
+
+        //進むボタン
+        private void btGoForward_Click(object sender, EventArgs e) {
+            wvRssLink.GoForward();
+        }
+
+        //起動時の処理
+        private void Form1_Load(object sender, EventArgs e) {
+            //自分の回答
+            //btGoBack.Enabled = false;
+            //btGoForward.Enabled = false;
+
+            //書き換え　模範解答
+            GoForwardBtEnableSet();
+        }
+
+        //読み込み終了
+        private void wvRssLink_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e) {
+            //自分の回答
+            //if (wvRssLink.CanGoBack == true) {
+            //    btGoBack.Enabled = true;
+            //} else {
+            //    btGoBack.Enabled = false;
+            //}
+
+            //if (wvRssLink.CanGoForward == true) {
+            //    btGoForward.Enabled = true;
+            //} else {
+            //    btGoForward.Enabled = false;
+            //}
+
+            //書き換え　模範解答
+            GoForwardBtEnableSet();
+        }
+
+        private void GoForwardBtEnableSet() {
+            btGoBack.Enabled = wvRssLink.CanGoBack;
+            btGoForward.Enabled = wvRssLink.CanGoForward;
         }
     }
 }
