@@ -32,7 +32,7 @@ namespace Exercise03 {
                 };
 
                 var serializer = new XmlSerializer(typeof(Employee[]));
-                //または var serializer = new XmlSerializer(employees.GetType(), xRout);
+                //または var serializer = new XmlSerializer(employees.GetType(), xRoot);
                 serializer.Serialize(writer, employees);
             } 
         }
