@@ -2,11 +2,24 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace RSSReader {
     public partial class Form1 : Form {
 
         private List<ItemData> items;
+
+        //辞書を使ったやり方
+        Dictionary<string, string> rssUrlDict = new Dictionary<string, string>() {
+            {"主要", "https://news.yahoo.co.jp/rss/topics/top-picks.xml"},
+            {"経済", "https://news.yahoo.co.jp/rss/topics/business.xml"},
+            {"IT", "https://news.yahoo.co.jp/rss/topics/it.xml" }
+        };
+
+
+        string[] urls = {"https://news.yahoo.co.jp/rss/topics/top-picks.xml",
+                            "https://news.yahoo.co.jp/rss/topics/business.xml",
+                            "https://news.yahoo.co.jp/rss/topics/it.xml"};
 
         public Form1() {
             InitializeComponent();
@@ -15,27 +28,47 @@ namespace RSSReader {
         private async void btRssGet_Click(object sender, EventArgs e) {
             using (var hc = new HttpClient()) {
 
-                string xml = await hc.GetStringAsync(tbUrl.Text);
-                XDocument xdoc = XDocument.Parse(xml);
+                if (comboBox1.Text.Contains("https")) {
+                    string xml = await hc.GetStringAsync(comboBox1.Text);
+                    XDocument xdoc = XDocument.Parse(xml);
 
-                //var url = hc.OpenRead(tbUrl.Text);
-                //XDocument xdoc = XDocument.Load(url); //RSSの取得
+                    //var url = hc.OpenRead(tbUrl.Text);
+                    //XDocument xdoc = XDocument.Load(url); //RSSの取得
 
-                //RSSを解析して必要な要素を取得
-                items = xdoc.Root.Descendants("item")
-                    .Select(x =>
-                        new ItemData {
-                            Title = (string)x.Element("title"),
-                            Link = (string)x.Element("link"),
-                        }).ToList();
+                    //RSSを解析して必要な要素を取得
+                    items = xdoc.Root.Descendants("item")
+                        .Select(x =>
+                            new ItemData {
+                                Title = (string)x.Element("title"),
+                                Link = (string)x.Element("link"),
+                            }).ToList();
 
-                //リストボックスへタイトルを表示
-                lbTitles.Items.Clear();
-                items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+                    //リストボックスへタイトルを表示
+                    lbTitles.Items.Clear();
+                    items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
 
-                //foreach (var item in items) {
-                //    lbTitles.Items.Add(item.Title);
-                //}
+                    //foreach (var item in items) {
+                    //    lbTitles.Items.Add(item.Title);
+                    //}
+                } else {
+                    string xml = await hc.GetStringAsync(urls[comboBox1.SelectedIndex]);
+                    XDocument xdoc = XDocument.Parse(xml);
+
+                    //var url = hc.OpenRead(tbUrl.Text);
+                    //XDocument xdoc = XDocument.Load(url); //RSSの取得
+
+                    //RSSを解析して必要な要素を取得
+                    items = xdoc.Root.Descendants("item")
+                        .Select(x =>
+                            new ItemData {
+                                Title = (string)x.Element("title"),
+                                Link = (string)x.Element("link"),
+                            }).ToList();
+
+                    //リストボックスへタイトルを表示
+                    lbTitles.Items.Clear();
+                    items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+                }
             }
 
             //リストボックスの背景色を交互に変更
@@ -73,6 +106,7 @@ namespace RSSReader {
         }
 
         //読み込み終了
+        //private void wvRssLink_SourceChanged(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         private void wvRssLink_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e) {
             //自分の回答
             //if (wvRssLink.CanGoBack == true) {

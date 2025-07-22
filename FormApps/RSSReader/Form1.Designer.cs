@@ -23,22 +23,14 @@
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            tbUrl = new TextBox();
             btRssGet = new Button();
             lbTitles = new ListBox();
             wvRssLink = new Microsoft.Web.WebView2.WinForms.WebView2();
             btGoBack = new Button();
             btGoForward = new Button();
+            comboBox1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
-            // 
-            // tbUrl
-            // 
-            tbUrl.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            tbUrl.Location = new Point(118, 11);
-            tbUrl.Name = "tbUrl";
-            tbUrl.Size = new Size(450, 33);
-            tbUrl.TabIndex = 0;
             // 
             // btRssGet
             // 
@@ -98,32 +90,40 @@
             btGoForward.UseVisualStyleBackColor = true;
             btGoForward.Click += btGoForward_Click;
             // 
+            // comboBox1
+            // 
+            comboBox1.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "主要", "経済", "IT" });
+            comboBox1.Location = new Point(118, 15);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(450, 29);
+            comboBox1.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 633);
+            Controls.Add(comboBox1);
             Controls.Add(btGoForward);
             Controls.Add(btGoBack);
             Controls.Add(wvRssLink);
             Controls.Add(lbTitles);
             Controls.Add(btRssGet);
-            Controls.Add(tbUrl);
             Name = "Form1";
             Text = "RSSリーダー";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)wvRssLink).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private TextBox tbUrl;
         private Button btRssGet;
         private ListBox lbTitles;
         private Microsoft.Web.WebView2.WinForms.WebView2 wvRssLink;
         private Button btGoBack;
         private Button btGoForward;
+        private ComboBox comboBox1;
     }
 }
