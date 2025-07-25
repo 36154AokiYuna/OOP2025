@@ -106,7 +106,6 @@ namespace RSSReader {
         }
 
 
-
         //戻るボタン
         private void button1_Click(object sender, EventArgs e) {
             wvRssLink.GoBack();
@@ -202,6 +201,8 @@ namespace RSSReader {
             e.Graphics.DrawString(txt, fnt, bsh, bnd);
         }
 
+
+        //フォームが閉じたら呼ばれる
         
     }
 }
