@@ -53,6 +53,7 @@
             // lbTitles
             // 
             lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lbTitles.DrawMode = DrawMode.OwnerDrawFixed;
             lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
             lbTitles.FormattingEnabled = true;
             lbTitles.ItemHeight = 21;
@@ -61,6 +62,7 @@
             lbTitles.Size = new Size(636, 130);
             lbTitles.TabIndex = 2;
             lbTitles.Click += lbTitles_Click;
+            lbTitles.DrawItem += lbTitles_DrawItem;
             // 
             // wvRssLink
             // 
