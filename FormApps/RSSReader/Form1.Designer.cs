@@ -34,6 +34,7 @@
             label1 = new Label();
             ssMessageArea = new StatusStrip();
             tsslbMessage = new ToolStripStatusLabel();
+            btRssDel = new Button();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             ssMessageArea.SuspendLayout();
             SuspendLayout();
@@ -108,7 +109,7 @@
             // 
             // btRssAdd
             // 
-            btRssAdd.Font = new Font("Yu Gothic UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btRssAdd.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
             btRssAdd.Location = new Point(523, 62);
             btRssAdd.Name = "btRssAdd";
             btRssAdd.Size = new Size(59, 29);
@@ -149,11 +150,23 @@
             tsslbMessage.Name = "tsslbMessage";
             tsslbMessage.Size = new Size(0, 17);
             // 
+            // btRssDel
+            // 
+            btRssDel.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btRssDel.Location = new Point(590, 61);
+            btRssDel.Name = "btRssDel";
+            btRssDel.Size = new Size(59, 29);
+            btRssDel.TabIndex = 11;
+            btRssDel.Text = "削除";
+            btRssDel.UseVisualStyleBackColor = true;
+            btRssDel.Click += btRssDel_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 544);
+            Controls.Add(btRssDel);
             Controls.Add(ssMessageArea);
             Controls.Add(label1);
             Controls.Add(tbFavAdd);
@@ -186,5 +199,6 @@
         private Label label1;
         private StatusStrip ssMessageArea;
         private ToolStripStatusLabel tsslbMessage;
+        private Button btRssDel;
     }
 }

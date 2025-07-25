@@ -21,7 +21,7 @@ namespace RSSReader {
 
         //    GoForwardBtEnableSet();
         //}
-
+        
 
         List<string> urls = new List<string> {"https://news.yahoo.co.jp/rss/topics/top-picks.xml",
                             "https://news.yahoo.co.jp/rss/topics/business.xml",
@@ -151,6 +151,17 @@ namespace RSSReader {
                 urls.Add(comboBox1.Text);
                 comboBox1.Items.Add(tbFavAdd.Text);
                 tsslbMessage.Text = "お気に入り登録完了";
+            }
+        }
+
+        //お気に入り削除
+        private void btRssDel_Click(object sender, EventArgs e) {
+            if (comboBox1.Items.Contains(tbFavAdd.Text)) {
+                urls.RemoveAt(comboBox1.SelectedIndex);
+                comboBox1.Items.Remove(comboBox1.Text);
+                tsslbMessage.Text = "お気に入り削除完了";
+            } else {
+                tsslbMessage.Text = "お気に入りに存在しません";
             }
         }
     }
