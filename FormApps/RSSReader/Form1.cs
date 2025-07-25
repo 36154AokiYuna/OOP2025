@@ -10,14 +10,20 @@ namespace RSSReader {
         private List<ItemData> items;
 
         //辞書を使ったやり方
-        Dictionary<string, string> rssUrlDict = new Dictionary<string, string>() {
-            {"主要", "https://news.yahoo.co.jp/rss/topics/top-picks.xml"},
-            {"経済", "https://news.yahoo.co.jp/rss/topics/business.xml"},
-            {"IT", "https://news.yahoo.co.jp/rss/topics/it.xml" }
-        };
+        //Dictionary<string, string> rssUrlDict = new Dictionary<string, string>() {
+        //    {"主要", "https://news.yahoo.co.jp/rss/topics/top-picks.xml"},
+        //    {"経済", "https://news.yahoo.co.jp/rss/topics/business.xml"},
+        //    {"IT", "https://news.yahoo.co.jp/rss/topics/it.xml" }
+        //};
+
+        //private void Form1_Load(object sender, EventArgs e) {
+        //    comboBox1.DataSource = rssUrlDict.Select(k => k.Key).ToList();
+
+        //    GoForwardBtEnableSet();
+        //}
 
 
-        string[] urls = {"https://news.yahoo.co.jp/rss/topics/top-picks.xml",
+        List<string> urls = new List<string> {"https://news.yahoo.co.jp/rss/topics/top-picks.xml",
                             "https://news.yahoo.co.jp/rss/topics/business.xml",
                             "https://news.yahoo.co.jp/rss/topics/it.xml"};
 
@@ -29,6 +35,7 @@ namespace RSSReader {
             using (var hc = new HttpClient()) {
 
                 if (comboBox1.Text.Contains("https")) {
+                    //string xml = await hc.GetStringAsync(getRssUrl(comboBox1.Text));
                     string xml = await hc.GetStringAsync(comboBox1.Text);
                     XDocument xdoc = XDocument.Parse(xml);
 
@@ -54,9 +61,6 @@ namespace RSSReader {
                     string xml = await hc.GetStringAsync(urls[comboBox1.SelectedIndex]);
                     XDocument xdoc = XDocument.Parse(xml);
 
-                    //var url = hc.OpenRead(tbUrl.Text);
-                    //XDocument xdoc = XDocument.Load(url); //RSSの取得
-
                     //RSSを解析して必要な要素を取得
                     items = xdoc.Root.Descendants("item")
                         .Select(x =>
@@ -77,6 +81,15 @@ namespace RSSReader {
             //}
 
         }
+
+        //コンボボックスの文字列をチェックしてアクセス可能なURLを返却する
+        //private string getRssUrl(string str) {
+        //    if (rssUrlDict.ContainsKey(str)) {
+        //        return rssUrlDict[str];
+        //    }
+        //    return str;
+        //}
+
 
         //タイトルを選択（クリック）したときに呼ばれるイベントハンドラ
         private void lbTitles_Click(object sender, EventArgs e) {
@@ -128,6 +141,17 @@ namespace RSSReader {
         private void GoForwardBtEnableSet() {
             btGoBack.Enabled = wvRssLink.CanGoBack;
             btGoForward.Enabled = wvRssLink.CanGoForward;
+        }
+
+        //お気に入り登録
+        private void btRssAdd_Click(object sender, EventArgs e) {
+            if (comboBox1.Items.Contains(tbFavAdd.Text)) {
+                tsslbMessage.Text = "重複しています";
+            } else {
+                urls.Add(comboBox1.Text);
+                comboBox1.Items.Add(tbFavAdd.Text);
+                tsslbMessage.Text = "お気に入り登録完了";
+            }
         }
     }
 }
