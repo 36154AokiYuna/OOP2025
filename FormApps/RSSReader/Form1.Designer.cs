@@ -72,7 +72,7 @@
             wvRssLink.DefaultBackgroundColor = Color.White;
             wvRssLink.Location = new Point(12, 237);
             wvRssLink.Name = "wvRssLink";
-            wvRssLink.Size = new Size(636, 272);
+            wvRssLink.Size = new Size(636, 285);
             wvRssLink.TabIndex = 3;
             wvRssLink.ZoomFactor = 1D;
             wvRssLink.NavigationCompleted += wvRssLink_NavigationCompleted;
@@ -141,7 +141,7 @@
             // ssMessageArea
             // 
             ssMessageArea.Items.AddRange(new ToolStripItem[] { tsslbMessage });
-            ssMessageArea.Location = new Point(0, 522);
+            ssMessageArea.Location = new Point(0, 535);
             ssMessageArea.Name = "ssMessageArea";
             ssMessageArea.Size = new Size(661, 22);
             ssMessageArea.TabIndex = 10;
@@ -167,7 +167,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(661, 544);
+            ClientSize = new Size(661, 557);
             Controls.Add(btRssDel);
             Controls.Add(ssMessageArea);
             Controls.Add(label1);

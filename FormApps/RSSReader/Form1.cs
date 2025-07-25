@@ -36,46 +36,58 @@ namespace RSSReader {
             using (var hc = new HttpClient()) {
 
                 if (comboBox1.Text.Contains("https")) {
-                    //string xml = await hc.GetStringAsync(getRssUrl(comboBox1.Text));
-                    string xml = await hc.GetStringAsync(comboBox1.Text);
-                    XDocument xdoc = XDocument.Parse(xml);
+                    //URLの形式チェック
+                    Uri.IsWellFormedUriString(comboBox1.Text, UriKind.Absolute);
 
-                    //var url = hc.OpenRead(tbUrl.Text);
-                    //XDocument xdoc = XDocument.Load(url); //RSSの取得
+                    try {
+                        //string xml = await hc.GetStringAsync(getRssUrl(comboBox1.Text));
+                        string xml = await hc.GetStringAsync(comboBox1.Text);
+                        XDocument xdoc = XDocument.Parse(xml);
 
-                    //RSSを解析して必要な要素を取得
-                    items = xdoc.Root.Descendants("item")
-                        .Select(x =>
-                            new ItemData {
-                                Title = (string)x.Element("title"),
-                                Link = (string)x.Element("link"),
-                            }).ToList();
+                        //var url = hc.OpenRead(tbUrl.Text);
+                        //XDocument xdoc = XDocument.Load(url); //RSSの取得
 
-                    //リストボックスへタイトルを表示
-                    lbTitles.Items.Clear();
-                    items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+                        //RSSを解析して必要な要素を取得
+                        items = xdoc.Root.Descendants("item")
+                            .Select(x =>
+                                new ItemData {
+                                    Title = (string)x.Element("title"),
+                                    Link = (string)x.Element("link"),
+                                }).ToList();
 
-                    //foreach (var item in items) {
-                    //    lbTitles.Items.Add(item.Title);
-                    //}
+                        //リストボックスへタイトルを表示
+                        lbTitles.Items.Clear();
+                        items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+
+                        //foreach (var item in items) {
+                        //    lbTitles.Items.Add(item.Title);
+                        //}
+                    }
+                    catch (Exception) {
+                        tsslbMessage.Text = "URLが正しくありません";
+                    }
                 } else {
-                    string xml = await hc.GetStringAsync(urls[comboBox1.SelectedIndex]);
-                    XDocument xdoc = XDocument.Parse(xml);
+                    try {
+                        string xml = await hc.GetStringAsync(urls[comboBox1.SelectedIndex]);
+                        XDocument xdoc = XDocument.Parse(xml);
 
-                    //RSSを解析して必要な要素を取得
-                    items = xdoc.Root.Descendants("item")
-                        .Select(x =>
-                            new ItemData {
-                                Title = (string)x.Element("title"),
-                                Link = (string)x.Element("link"),
-                            }).ToList();
+                        //RSSを解析して必要な要素を取得
+                        items = xdoc.Root.Descendants("item")
+                            .Select(x =>
+                                new ItemData {
+                                    Title = (string)x.Element("title"),
+                                    Link = (string)x.Element("link"),
+                                }).ToList();
 
-                    //リストボックスへタイトルを表示
-                    lbTitles.Items.Clear();
-                    items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+                        //リストボックスへタイトルを表示
+                        lbTitles.Items.Clear();
+                        items.ForEach(x => lbTitles.Items.Add(x.Title ?? "データなし"));
+                    }
+                    catch (Exception) {
+                        
+                    }
                 }
             }
-
         }
 
 
@@ -189,5 +201,7 @@ namespace RSSReader {
             //文字を描画
             e.Graphics.DrawString(txt, fnt, bsh, bnd);
         }
+
+        
     }
 }
