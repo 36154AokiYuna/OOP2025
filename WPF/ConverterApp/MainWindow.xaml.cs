@@ -24,5 +24,15 @@ namespace ConverterApp
         {
             InitializeComponent();
         }
+
+        private void ImperialUnitToMetric_Click(object sender, RoutedEventArgs e) {
+            if((String)MetricUnit.SelectedItem == "mm") {
+                
+            }
+        }
+
+        private void MetricToImperialUnit_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
