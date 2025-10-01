@@ -112,6 +112,9 @@ namespace ColorChecker {
 
         //リストボックスから選択した色を表示
         private void stockList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            //nullエラー修正
+            if (((ListBox)sender).SelectedIndex == -1) return;
+
             colorArea.Background = new SolidColorBrush(((MyColor)stockList.SelectedItem).Color);
             rSlider.Value = ((MyColor)stockList.SelectedItem).Color.R;
             gSlider.Value = ((MyColor)stockList.SelectedItem).Color.G;
