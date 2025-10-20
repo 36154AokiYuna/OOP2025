@@ -1,0 +1,35 @@
+﻿<Window x:Class="CustomerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomerApp" 
+        mc:Ignorable="d"
+        Title="顧客管理アプリケーション" SizeToContent="WidthAndHeight">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="名前" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
+            <TextBox x:Name="NameTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="電話番号" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
+            <TextBox  x:Name="PhoneTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="保存" x:Name="SaveButton" Margin="4" Height="50" Width="100" FontSize="20"/>
+            <Button Content="更新" x:Name="UpdateButton" Margin="4" Height="40" Width="70" FontSize="15"/>
+            <Button Content="削除" x:Name="DeleteButton" Margin="4" Height="40" Width="70" FontSize="15"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="検索" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
+            <TextBox x:Name="SearchTextBox" Margin="4" Width="300" FontSize="20"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <ListView x:Name="PersonListView" Margin="4" Height="600" Width="360"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
