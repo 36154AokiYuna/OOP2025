@@ -8,28 +8,59 @@
         Title="顧客管理アプリケーション" SizeToContent="WidthAndHeight">
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="名前" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
+            <TextBlock Text="名前" Width="60" VerticalAlignment="Center"
+                       TextAlignment="Center" Margin="5" FontSize="15"/>
             <TextBox x:Name="NameTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="電話番号" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
+            <TextBlock Text="電話番号" Width="60" VerticalAlignment="Center"
+                       TextAlignment="Center" Margin="5" FontSize="15"/>
             <TextBox  x:Name="PhoneTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="保存" x:Name="SaveButton" Margin="4" Height="50" Width="100" FontSize="20"/>
-            <Button Content="更新" x:Name="UpdateButton" Margin="4" Height="40" Width="70" FontSize="15"/>
-            <Button Content="削除" x:Name="DeleteButton" Margin="4" Height="40" Width="70" FontSize="15"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="検索" Width="60" VerticalAlignment="Center" TextAlignment="Center" FontSize="15"/>
-            <TextBox x:Name="SearchTextBox" Margin="4" Width="300" FontSize="20"/>
+            <TextBlock Text="住所" Width="60" VerticalAlignment="Center"
+                       TextAlignment="Center" Margin="5" FontSize="15"/>
+            <TextBox x:Name="AddressTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-            <ListView x:Name="PersonListView" Margin="4" Height="600" Width="360"/>
+            <Button Content="画像" x:Name="PictureButton" Margin="5,15,0,20" 
+                    Height="60" Width="70" FontSize="18" Click="PictureButton_Click"/>
+            <Image x:Name="PictureImage" Margin="50,4,0,0" Width="200"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="更新" x:Name="UpdateButton" Margin="4" Height="40" Width="70" 
+                    FontSize="15" Background="WhiteSmoke" Click="UpdateButton_Click"/>
+            <Button Content="削除" x:Name="DeleteButton" Margin="4" Height="40" Width="70"
+                    FontSize="15" Background="WhiteSmoke" Click="DeleteButton_Click"/>
+            <Button Content="保存" x:Name="SaveButton" Margin="40,2,0,0" Height="50" Width="100"
+                    FontSize="20" Background="LightGray" Click="SaveButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="検索" Width="60" VerticalAlignment="Center"
+                       TextAlignment="Center" FontSize="15"/>
+            <TextBox x:Name="SearchTextBox" Margin="4" Width="300" FontSize="20"
+                     SelectionChanged="SearchTextBox_SelectionChanged"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <ListView x:Name="CustomerListView" Margin="4" Height="500" Width="370"
+                      SelectionChanged="CustomerListView_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontSize="20"/>
+                            <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
+                            <TextBlock Text="{Binding Address}" FontSize="15"/>
+                            
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </StackPanel>
 </Window>
