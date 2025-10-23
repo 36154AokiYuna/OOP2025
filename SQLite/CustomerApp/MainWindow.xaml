@@ -49,18 +49,23 @@
 
         <StackPanel Orientation="Horizontal">
             <ListView x:Name="CustomerListView" Margin="4" Height="500" Width="370"
-                      SelectionChanged="CustomerListView_SelectionChanged">
+          SelectionChanged="CustomerListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" FontSize="20"/>
-                            <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
-                            <TextBlock Text="{Binding Address}" FontSize="15"/>
+                        <StackPanel Orientation="Horizontal" Margin="4">
                             
+                            <StackPanel Orientation="Vertical" Width="150">
+                                <TextBlock Text="{Binding Name}" FontSize="20"/>
+                                <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
+                                <TextBlock Text="{Binding Address}" FontSize="15"/>
+                            </StackPanel>
+
+                            <Image Source="{Binding Picture}" Height="100" Width="200"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackPanel>
     </StackPanel>
 </Window>
