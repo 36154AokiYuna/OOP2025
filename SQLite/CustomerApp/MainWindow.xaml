@@ -20,6 +20,12 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="郵便番号" Width="60" VerticalAlignment="Center"
+                       TextAlignment="Center" Margin="5" FontSize="15"/>
+            <TextBox  x:Name="PostTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="住所" Width="60" VerticalAlignment="Center"
                        TextAlignment="Center" Margin="5" FontSize="15"/>
             <TextBox x:Name="AddressTextBox" Margin="4" Height="30" Width="300" FontSize="18"/>
@@ -58,6 +64,8 @@
                                 <TextBlock Text="{Binding Name}" FontSize="20"/>
                                 <TextBlock Text="{Binding Phone,StringFormat='TEL： {0}'}" 
                                            Margin="5,5,0,0" Foreground="Blue"/>
+                                <TextBlock Text="{Binding Post,StringFormat='〒 {0}'}" 
+                                           Margin="5,5,0,0"/>
                                 <TextBlock Text="{Binding Address}" Margin="5,5,0,0"  FontSize="15"/>
                             </StackPanel>
 

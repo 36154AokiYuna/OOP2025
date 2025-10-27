@@ -17,6 +17,10 @@ namespace CustomerApp.Data {
         /// 電話番号
         /// </summary>
         public string Phone { get; set; } = string.Empty;
+        ///<summary>
+        /// 郵便番号
+        ///</summary> 
+        public string Post { get; set; } = string.Empty;
         /// <summary>
         /// 住所
         /// </summary>

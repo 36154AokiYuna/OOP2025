@@ -49,8 +49,6 @@ public partial class MainWindow : Window {
         }
     }
 
-
-
     //保存ボタン
     private void SaveButton_Click(object sender, RoutedEventArgs e) {
 
@@ -60,6 +58,7 @@ public partial class MainWindow : Window {
         var _customer = new Customer() {
             Name = NameTextBox.Text,
             Phone = PhoneTextBox.Text,
+            Post = PostTextBox.Text,
             Address = AddressTextBox.Text,
             Picture = customer.Picture,
         };
@@ -103,6 +102,7 @@ public partial class MainWindow : Window {
                 Id = selectedCustomer.Id,
                 Name = NameTextBox.Text,
                 Phone = PhoneTextBox.Text,
+                Post = PostTextBox.Text,
                 Address = AddressTextBox.Text,
                 Picture = ImageSourceToBytes(PictureImage.Source),
             };
@@ -133,6 +133,7 @@ public partial class MainWindow : Window {
 
         NameTextBox.Text = selectedCustomer.Name;
         PhoneTextBox.Text = selectedCustomer.Phone;
+        PostTextBox.Text = selectedCustomer.Post;
         AddressTextBox.Text = selectedCustomer.Address;
         PictureImage.Source = BytesToImageSource(selectedCustomer.Picture);
     }
