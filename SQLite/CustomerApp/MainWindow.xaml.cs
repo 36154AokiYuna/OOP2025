@@ -100,6 +100,7 @@ public partial class MainWindow : Window {
             connection.CreateTable<Customer>();
 
             var customer = new Customer() {
+                Id = selectedCustomer.Id,
                 Name = NameTextBox.Text,
                 Phone = PhoneTextBox.Text,
                 Address = AddressTextBox.Text,
@@ -136,9 +137,10 @@ public partial class MainWindow : Window {
         PictureImage.Source = BytesToImageSource(selectedCustomer.Picture);
     }
 
+
     private byte[] ImageSourceToBytes(ImageSource imageSource) {
         if (imageSource is BitmapSource bitmapSource) {
-            var encoder = new JpegBitmapEncoder(); // JPEGでもOK
+            var encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
 
             using (var stream = new MemoryStream()) {
