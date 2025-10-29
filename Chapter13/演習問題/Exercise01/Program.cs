@@ -52,7 +52,14 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_4() {
+            //P.299参照
+            var books = Library.Books
+                        .OrderByDescending(b => b.PublishedYear)
+                        .ThenByDescending(b => b.Price);
 
+            foreach (var book in books) {
+                Console.WriteLine($"{book.PublishedYear}年 {book.Price}円 {book.Title}");
+            }
         }
 
         private static void Exercise1_5() {
