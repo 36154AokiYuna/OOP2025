@@ -118,7 +118,25 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_7() {
+            var books = Library.Books
+                .Join(Library.Categories
+                        , b => b.CategoryId
+                        , c => c.Id
+                        , (b, c) => new {
+                            b.Title,
+                            Category = c.Name,
+                            b.PublishedYear
+                        })
+                .Where(b => b.Category == "Development")
+                .GroupBy(b => b.PublishedYear);
 
+            foreach (var book in books) {
+                Console.WriteLine();
+                Console.WriteLine($"# {book.Key}");
+                foreach (var title in book) {
+                    Console.WriteLine($"   {title.Title}");
+                }
+            }
         }
 
         private static void Exercise1_8() {
