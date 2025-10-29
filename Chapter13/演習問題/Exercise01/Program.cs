@@ -63,6 +63,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_5() {
+            //自分の回答
             var books = Library.Books
                 .Join(Library.Categories
                         , book => book.CategoryId
@@ -79,10 +80,41 @@ namespace Exercise01 {
             foreach (var book in books) {
                 Console.WriteLine(book);
             }
+
+            //模範解答
+            //var categoryNames = Library.Books
+            //                        .Where(b=>b.PublishedYear == 2022)
+            //                        .Join(Library.Categories
+            //                                , b => b.CategoryId
+            //                                , c => c.Id
+            //                                , (b, c) => c.Name)
+            //                                .Distinct();
+
+            //foreach (var name in categoryNames) {
+            //    Console.WriteLine(name);
+            //}
         }
 
         private static void Exercise1_6() {
+            var books = Library.Books
+                .Join(Library.Categories
+                        , b => b.CategoryId
+                        , c => c.Id
+                        , (b, c) => new {
+                            b.Title,
+                            Category = c.Name,
+                            b.PublishedYear
+                        })
+                .GroupBy(b => b.Category)
+                .OrderBy(b => b.Key);
 
+            foreach (var book in books) {
+                Console.WriteLine();
+                Console.WriteLine($"# {book.Key}");
+                foreach (var title in book) {
+                    Console.WriteLine($"   {title.Title}");
+                }
+            }
         }
 
         private static void Exercise1_7() {
