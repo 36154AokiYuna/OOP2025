@@ -63,7 +63,22 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_5() {
+            var books = Library.Books
+                .Join(Library.Categories
+                        , book => book.CategoryId
+                        , Category => Category.Id
+                        , (book, category) => new {
+                            book.Title,
+                            Category = category.Name,
+                            book.PublishedYear
+                        })
+                .Where(b => b.PublishedYear == 2022)
+                .Select(b => b.Category)
+                .Distinct();
 
+            foreach (var book in books) {
+                Console.WriteLine(book);
+            }
         }
 
         private static void Exercise1_6() {
