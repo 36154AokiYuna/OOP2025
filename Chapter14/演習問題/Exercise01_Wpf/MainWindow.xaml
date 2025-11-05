@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Exercise01_Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <StackPanel>
+        <Button Content="ファイル選択" Click="Button_Click"/>
+        <TextBox x:Name="TextArea" TextWrapping="Wrap" Height="400"/>
+    </StackPanel>
 </Window>
