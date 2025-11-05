@@ -96,6 +96,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_6() {
+            //自分の回答
             var books = Library.Books
                 .Join(Library.Categories
                         , b => b.CategoryId
@@ -115,9 +116,31 @@ namespace Exercise01 {
                     Console.WriteLine($"   {title.Title}");
                 }
             }
+
+            //模範解答
+            var groups = Library.Books
+                .Join(Library.Categories
+                        , b => b.CategoryId
+                        , c => c.Id
+                        , (b, c) => new {
+                            CategoryName = c.Name,
+                            b.Title
+                        }
+                )
+                .GroupBy(x => x.CategoryName)
+                .OrderBy(x => x.Key);
+
+            foreach (var group in groups) {
+                Console.WriteLine();
+                Console.WriteLine($"# {group.Key}");
+                foreach (var book in group) {
+                    Console.WriteLine($"   {book.Title}");
+                }
+            }
         }
 
         private static void Exercise1_7() {
+            //自分の回答
             var books = Library.Books
                 .Join(Library.Categories
                         , b => b.CategoryId
@@ -137,10 +160,45 @@ namespace Exercise01 {
                     Console.WriteLine($"   {title.Title}");
                 }
             }
+
+            //模範解答
+            //var groups = Library.Categories
+            //    .Where(x => x.Name.Equals("Development"))
+            //    .Join(Library.Books
+            //            , c => c.Id
+            //            , b => b.CategoryId
+            //            , (c, b) => new {
+            //                b.Title,
+            //                b.PublishedYear
+            //            })
+            //    .GroupBy(x => x.PublishedYear)
+            //    .OrderBy(x => x.Key);
+
+            //foreach (var group in groups) {
+            //    Console.WriteLine();
+            //    Console.WriteLine($"# {group.Key}");
+            //    foreach (var book in group) {
+            //        Console.WriteLine($"   {book.Title}");
+            //    }
+            //}
         }
 
         private static void Exercise1_8() {
+            //欠席してたためコピー
+            var categoryNames = Library.Categories
+                .GroupJoin(Library.Books,
+                            c => c.Id,
+                            b => b.CategoryId,
+                            (c, books) => new {
+                                CategoryName = c.Name,
+                                Count = books.Count(),
+                            })
+                .Where(x => x.Count >= 4)
+                .Select(x => x.CategoryName);
 
+            foreach (var name in categoryNames) {
+                Console.WriteLine(name);
+            }
         }
     }
 }
