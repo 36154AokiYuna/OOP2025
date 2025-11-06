@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/> <!--アドレスバー-->
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/> <!--プログレスバー-->
             <RowDefinition Height="*"/> <!--ブラウザー-->
         </Grid.RowDefinitions>
 
@@ -22,6 +22,12 @@
             <Button Content="移動" Width="60" Click="GoButton_Click"/>
         </DockPanel>
 
+        <!--プログレスバー-->
+        <ProgressBar x:Name="LoadingBar" Grid.Row="1" Height="4" Margin="5,0,5,5"
+                     Minimum="0" Maximum="100" Visibility="Collapsed"
+                     IsIndeterminate="True"/>
+
+        <!--ブラウザー-->
         <Wpf:WebView2 x:Name="WebView" Margin="5" Grid.Row="2"/>
 
     </Grid>
