@@ -6,8 +6,8 @@ namespace Section05 {
     internal class Program {
         static async Task Main(string[] args) {
 
-            await new TaskExample().Run();
-
+            var ta = new TaskExample();
+            await ta.Run();
         }
     }
 
