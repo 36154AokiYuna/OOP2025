@@ -5,6 +5,10 @@ namespace LineCounter {
         static void Main(string[] args) {
             Console.Write("パスを入力してください：");
             string path = Console.ReadLine();
+            if (!File.Exists(path)) {
+                Console.WriteLine("ファイルが存在しません");
+                return;
+            }
             TextProcessor.Run<LineCounterProcessor>(path);
         }
     }
