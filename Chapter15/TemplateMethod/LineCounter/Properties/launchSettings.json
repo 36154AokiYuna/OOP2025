@@ -1,8 +1,7 @@
 {
   "profiles": {
     "LineCounter": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\infosys\\source\\repos\\OOP2025\\Chapter14\\WebBrowser\\MainWindow.xaml.cs"
+      "commandName": "Project"
     }
   }
 }

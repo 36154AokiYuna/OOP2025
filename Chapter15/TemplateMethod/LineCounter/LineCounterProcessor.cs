@@ -17,9 +17,13 @@ namespace LineCounter {
         }
 
         protected override void Execute(string line) {
+            //自分の回答
             if (line.Contains(word)) {
                 _count++;
             }
+
+            //模範解答
+
         }
 
         protected override void Terminate() => Console.WriteLine($"{word}の個数：{_count}個");
