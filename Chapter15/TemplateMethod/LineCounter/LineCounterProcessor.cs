@@ -18,12 +18,12 @@ namespace LineCounter {
 
         protected override void Execute(string line) {
             //自分の回答
-            if (line.Contains(word)) {
-                _count++;
-            }
+            //if (line.Contains(word)) {
+            //    _count++;
+            //}
 
             //模範解答
-
+            _count += line.Split(word).Length - 1;
         }
 
         protected override void Terminate() => Console.WriteLine($"{word}の個数：{_count}個");
