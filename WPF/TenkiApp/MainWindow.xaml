@@ -24,6 +24,7 @@
             <StackPanel Orientation="Horizontal">
                 <ComboBox x:Name="CityComboBox" Width="200" Margin="0,0,10,0" VerticalAlignment="Center"/>
                 <Button Content="検索" Width="80" Click="SearchButton_Click"/>
+                <Button Content="現在地取得" Width="80" Margin="10,0,0,0" Click="CurrentLocationButton_Click"/>
             </StackPanel>
         </GroupBox>
 
@@ -31,11 +32,11 @@
         <GroupBox Grid.Row="2" Header="天気情報" Padding="10" Margin="0,0,0,20" Background="White">
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="CityNameText" FontSize="16" Margin="0,0,10,0"/>
-                <Image x:Name="WeatherIcon" Width="32" Height="32" Margin="0,0,10,0"/>
-                <TextBlock x:Name="CurrentWeatherText" FontSize="16" Margin="0,0,10,0"/>
-                <TextBlock x:Name="CurrentTempText" FontSize="16" Margin="0,0,10,0"/>
-                <TextBlock x:Name="CurrentHumidityText" FontSize="16" Margin="0,0,10,0"/>
-                <TextBlock x:Name="CurrentWindText" FontSize="16" Margin="0,0,10,0"/>
+                <Image x:Name="WeatherIcon" Width="32" Height="32" Margin="0,0,20,0"/>
+                <TextBlock x:Name="CurrentWeatherText" FontSize="16" Margin="0,0,20,0"/>
+                <TextBlock x:Name="CurrentTempText" FontSize="16" Margin="0,0,20,0"/>
+                <TextBlock x:Name="CurrentHumidityText" FontSize="16" Margin="0,0,20,0"/>
+                <TextBlock x:Name="CurrentWindText" FontSize="16" Margin="0,0,20,0"/>
             </StackPanel>
         </GroupBox>
 
