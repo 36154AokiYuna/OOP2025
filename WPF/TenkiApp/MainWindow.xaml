@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenkiApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="TenkiApp" Height="450" Width="700"
+        Background="LightBlue">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- 一行目：アプリ名 -->
+        <TextBlock Grid.Row="0" Text="お天気アプリ" FontSize="28" FontWeight="Bold" 
+                   HorizontalAlignment="Left" Margin="0,0,0,20"/>
+
+        <!-- 二行目：都市選択 -->
+        <GroupBox Grid.Row="1" Header="都市を選択" Margin="0,0,0,20" Padding="10" Background="White">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="CityComboBox" Width="200" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <Button Content="検索" Width="80" Click="SearchButton_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 三行目：天気情報 -->
+        <GroupBox Grid.Row="2" Header="天気情報" Padding="10" Margin="0,0,0,20" Background="White">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="CityNameText" FontSize="16" Margin="0,0,10,0"/>
+                <Image x:Name="WeatherIcon" Width="32" Height="32" Margin="0,0,10,0"/>
+                <TextBlock x:Name="CurrentWeatherText" FontSize="16" Margin="0,0,10,0"/>
+                <TextBlock x:Name="CurrentTempText" FontSize="16" Margin="0,0,10,0"/>
+                <TextBlock x:Name="CurrentHumidityText" FontSize="16" Margin="0,0,10,0"/>
+                <TextBlock x:Name="CurrentWindText" FontSize="16" Margin="0,0,10,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 四行目：1時間ごとの予報 -->
+        <GroupBox Grid.Row="3" Header="1時間ごとの予報" Padding="10" Background="White">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="HourlyForecastPanel">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightGray" BorderThickness="1" Margin="5" Padding="5" Width="100">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Time}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <Image Source="{Binding Icon}" Width="32" Height="32" Margin="0,5"/>
+                                    <TextBlock Text="{Binding Temperature}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </GroupBox>
     </Grid>
 </Window>
