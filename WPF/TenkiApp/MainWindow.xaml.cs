@@ -1,77 +1,65 @@
-﻿using System.Net.Http;
-using System.Net.Http.Json;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace TenkiApp {
     public partial class MainWindow : Window {
+        private void UpdateLastUpdatedTime() {
+            LastUpdatedText.Text = "最終更新: " + DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+        }
 
-        private readonly Dictionary<string, (double Latitude, double Longitude)> CityCoordinates =
-            new Dictionary<string, (double, double)> {
-            { "札幌", (43.0642, 141.3468) },
-            { "青森", (40.8246, 140.7400) },
-            { "盛岡", (39.7036, 141.1527) },
-            { "仙台", (38.2688, 140.8721) },
-            { "秋田", (39.7186, 140.1024) },
-            { "山形", (38.2404, 140.3633) },
-            { "福島", (37.7608, 140.4747) },
-            { "水戸", (36.3659, 140.4719) },
-            { "宇都宮", (36.5658, 139.8836) },
-            { "前橋", (36.3912, 139.0609) },
-            { "さいたま", (35.8617, 139.6455) },
-            { "千葉", (35.6074, 140.1065) },
-            { "東京", (35.6895, 139.6917) },
-            { "横浜", (35.4437, 139.6380) },
-            { "新潟", (37.9026, 139.0232) },
-            { "富山", (36.6953, 137.2113) },
-            { "金沢", (36.5947, 136.6256) },
-            { "福井", (36.0652, 136.2216) },
-            { "甲府", (35.6639, 138.5683) },
-            { "長野", (36.6513, 138.1810) },
-            { "岐阜", (35.4233, 136.7606) },
-            { "静岡", (34.9756, 138.3828) },
-            { "名古屋", (35.1815, 136.9066) },
-            { "津", (34.7303, 136.5086) },
-            { "大津", (35.0045, 135.8686) },
-            { "京都", (35.0116, 135.7681) },
-            { "大阪", (34.6937, 135.5023) },
-            { "神戸", (34.6901, 135.1955) },
-            { "奈良", (34.6851, 135.8048) },
-            { "和歌山", (34.2260, 135.1675) },
-            { "鳥取", (35.5011, 134.2351) },
-            { "松江", (35.4723, 133.0505) },
-            { "岡山", (34.6553, 133.9198) },
-            { "広島", (34.3853, 132.4553) },
-            { "山口", (34.1861, 131.4706) },
-            { "徳島", (34.0658, 134.5593) },
-            { "高松", (34.3428, 134.0466) },
-            { "松山", (33.8392, 132.7657) },
-            { "高知", (33.5597, 133.5311) },
-            { "福岡", (33.5902, 130.4017) },
-            { "佐賀", (33.2635, 130.3009) },
-            { "長崎", (32.7503, 129.8777) },
-            { "熊本", (32.7898, 130.7417) },
-            { "大分", (33.2382, 131.6126) },
-            { "宮崎", (31.9111, 131.4239) },
-            { "鹿児島", (31.5966, 130.5571) },
-            { "那覇", (26.2124, 127.6809) }
-            };
+        private Dictionary<string, (double Latitude, double Longitude)> CityCoordinates;
+
+        private void LoadCitiesFromJson() {
+            string json = File.ReadAllText("cities.json");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var prefectures = JsonSerializer.Deserialize<Dictionary<string, List<City>>>(json, options);
+
+            CityCoordinates = new Dictionary<string, (double, double)>();
+
+            // ComboBoxに渡すリストを作成
+            var comboItems = new List<object>();
+
+            foreach (var kv in prefectures) // kv.Key = 都道府県名, kv.Value = 都市リスト
+            {
+                // 都道府県見出し（選択不可）
+                comboItems.Add(new ComboBoxItem {
+                    Content = kv.Key,
+                    IsEnabled = false,
+                });
+
+                //区切り線を追加
+                comboItems.Add(new Separator());
+
+                // 都市リスト（選択可）
+                foreach (var city in kv.Value) {
+                    CityCoordinates[city.name] = (city.lat, city.lon);
+                    comboItems.Add(city.name);
+                }
+            }
+
+            // ItemsSourceにまとめてバインド
+            CityComboBox.ItemsSource = comboItems;
+        }
 
         public MainWindow() {
             InitializeComponent();
-            Loaded += Window_Loaded;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
-            CityComboBox.ItemsSource = CityCoordinates.Keys;
+            LoadCitiesFromJson(); //都市リスト読み込み
+            Loaded += CurrentLocationButton_Click;
         }
 
         private async void SearchButton_Click(object sender, RoutedEventArgs e) {
             if (CityComboBox.SelectedItem is string city &&
                 CityCoordinates.TryGetValue(city, out var coords)) {
                 await GetWeatherAsync(coords.Latitude, coords.Longitude, city);
+                UpdateLastUpdatedTime();
             }
         }
 
@@ -80,7 +68,11 @@ namespace TenkiApp {
             try {
                 var location = await http.GetFromJsonAsync<IpLocation>("http://ip-api.com/json/");
                 if (location?.status == "success") {
+                    CityComboBox.SelectedItem = null;
+                    CityComboBox.Text = string.Empty;
+
                     await GetWeatherAsync(location.lat, location.lon, location.city);
+                    UpdateLastUpdatedTime();
                 } else {
                     MessageBox.Show("現在地の取得に失敗しました。");
                 }
@@ -165,14 +157,19 @@ namespace TenkiApp {
 
         private string GetWeatherIconUrl(int code) {
             return code switch {
-                0 => "https://openweathermap.org/img/wn/01d.png", // 快晴
-                1 => "https://openweathermap.org/img/wn/02d.png", // 晴れ
-                2 => "https://openweathermap.org/img/wn/03d.png", // 曇り
-                3 => "https://openweathermap.org/img/wn/50d.png", // 霧
-                61 => "https://openweathermap.org/img/wn/09d.png", // 雨
-                71 => "https://openweathermap.org/img/wn/13d.png", // 雪
-                95 => "https://openweathermap.org/img/wn/11d.png", // 雷雨
-                _ => "https://openweathermap.org/img/wn/01d.png"   // デフォルト
+                0 => "https://img.icons8.com/color/48/sun.png",
+                1 => "https://img.icons8.com/color/48/partly-cloudy-day.png",
+                2 => "https://img.icons8.com/color/48/cloud.png",
+                3 => "https://img.icons8.com/color/48/clouds.png",
+                45 or 48 => "https://img.icons8.com/color/48/fog-day.png",
+                51 or 53 or 55 => "https://img.icons8.com/color/48/light-rain.png",
+                61 or 63 or 65 => "https://img.icons8.com/color/48/rain.png",
+                66 or 67 => "https://img.icons8.com/color/48/sleet.png",
+                71 or 73 or 75 or 77 => "https://img.icons8.com/color/48/snow.png",
+                80 or 81 or 82 => "https://img.icons8.com/color/48/rain.png",
+                85 or 86 => "https://img.icons8.com/color/48/snow.png",
+                95 or 96 or 99 => "https://img.icons8.com/color/48/storm.png",
+                _ => "https://img.icons8.com/color/48/weather.png"
             };
         }
     }
@@ -207,3 +204,4 @@ namespace TenkiApp {
         public string Icon { get; set; }
     }
 }
+       
