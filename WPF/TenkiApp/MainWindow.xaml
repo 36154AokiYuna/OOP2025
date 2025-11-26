@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenkiApp"
         mc:Ignorable="d"
-        Title="TenkiApp" Height="710" Width="750">
+        Title="TenkiApp" Height="710" Width="840"
+        ResizeMode="CanMinimize">
 
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
