@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace TenkiApp {
@@ -57,10 +58,12 @@ namespace TenkiApp {
 
         private bool isDarkMode = false;
 
+        //ダークモード切替ボタンクリック処理
         private void ThemeToggleButton_Click(object sender, RoutedEventArgs e) {
             if (isDarkMode) {
                 // ライトモードに戻す
-                this.Background = System.Windows.Media.Brushes.LightBlue; // フォーム背景を白に
+                this.Background = new LinearGradientBrush(
+                Colors.AliceBlue, Colors.SkyBlue, new Point(0, 0), new Point(1, 0));
                 FormName.Foreground = System.Windows.Media.Brushes.Black;
                 LastUpdatedText.Foreground = System.Windows.Media.Brushes.Black;
 
@@ -70,7 +73,8 @@ namespace TenkiApp {
                 isDarkMode = false;
             } else {
                 // ダークモードに切り替え
-                this.Background = System.Windows.Media.Brushes.Black; // フォーム背景を黒に
+                this.Background = new LinearGradientBrush(
+                Colors.DarkSlateGray, Colors.Black, new Point(0, 0), new Point(1, 0));
                 FormName.Foreground = System.Windows.Media.Brushes.White;
                 LastUpdatedText.Foreground = System.Windows.Media.Brushes.White;
 
@@ -81,14 +85,28 @@ namespace TenkiApp {
             }
         }
 
+        //検索ボタンクリック処理
         private async void SearchButton_Click(object sender, RoutedEventArgs e) {
+            // 未選択チェック
+            if (CityComboBox.SelectedIndex == -1) {
+                StatusMessage.Text = "⚠都市を選択してください。";
+                return;
+            }
+
+            // 選択された都市を取得
             if (CityComboBox.SelectedItem is string city &&
                 CityCoordinates.TryGetValue(city, out var coords)) {
+                StatusMessage.Text = ""; // 正常時はメッセージを消す
+
                 await GetWeatherAsync(coords.Latitude, coords.Longitude, city);
                 UpdateLastUpdatedTime();
+            } else {
+                // 座標が見つからなかった場合
+                StatusMessage.Text = "⚠選択した都市の情報が見つかりません。";
             }
         }
 
+        //現在地取得ボタンクリック処理
         private async void CurrentLocationButton_Click(object sender, RoutedEventArgs e) {
             using var http = new HttpClient();
             try {
@@ -115,6 +133,7 @@ namespace TenkiApp {
             public double lon { get; set; }
         }
 
+        //天気を持ってくる
         private async Task GetWeatherAsync(double latitude, double longitude, string cityName) {
 
             string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}" +
@@ -130,11 +149,11 @@ namespace TenkiApp {
 
                 if (weather?.current != null) {
                     // 現在の天気を表示
-                    CityNameText.Text = $"都市名：{cityName}";
-                    CurrentWeatherText.Text = $"天気：{GetWeatherDescription(weather.current.weather_code)}";
-                    CurrentTempText.Text = $"気温：{weather.current.temperature_2m} ℃";
-                    CurrentHumidityText.Text = $"湿度：{weather.current.relative_humidity_2m} ％";
-                    CurrentWindText.Text = $"風速：{weather.current.wind_speed_10m} m/s";
+                    CityNameText.Text = $"都市名： {cityName}";
+                    CurrentWeatherText.Text = $"天気： {GetWeatherDescription(weather.current.weather_code)}";
+                    CurrentTempText.Text = $"気温： {weather.current.temperature_2m} ℃";
+                    CurrentHumidityText.Text = $"湿度： {weather.current.relative_humidity_2m} ％";
+                    CurrentWindText.Text = $"風速： {weather.current.wind_speed_10m} m/s";
                     WeatherIcon.Source = new BitmapImage(new Uri(GetWeatherIconUrl(weather.current.weather_code)));
 
                     // 現在時刻に最も近い時間から12時間分の予報を表示
@@ -163,8 +182,8 @@ namespace TenkiApp {
                         for (int i = 0; i < weather.daily.time.Count; i++) {
                             weeklyItems.Add(new WeeklyForecastItem {
                                 Date = DateTime.Parse(weather.daily.time[i]).ToString("MM/dd"),
-                                TempMax = $"最高: {weather.daily.temperature_2m_max[i]}℃",
-                                TempMin = $"最低: {weather.daily.temperature_2m_min[i]}℃",
+                                TempMax = $"最高： {weather.daily.temperature_2m_max[i]}℃",
+                                TempMin = $"最低： {weather.daily.temperature_2m_min[i]}℃",
                                 Icon = GetWeatherIconUrl(weather.daily.weather_code[i])
                             });
                         }
@@ -196,6 +215,7 @@ namespace TenkiApp {
             };
         }
 
+        //天気アイコン
         private string GetWeatherIconUrl(int code) {
             return code switch {
                 0 => "https://img.icons8.com/color/48/sun.png",

@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenkiApp"
         mc:Ignorable="d"
-        Title="TenkiApp" Height="680" Width="750"
-        Background="LightBlue">
+        Title="TenkiApp" Height="710" Width="750">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="AliceBlue" Offset="0"/>
+            <GradientStop Color="SkyBlue" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- 一行目：アプリ名 + ダークモード切替ボタン + 最終更新時刻 -->
@@ -28,8 +36,8 @@
             <TextBlock x:Name="FormName" Text="お天気アプリ" FontSize="28" FontWeight="Bold"
                     HorizontalAlignment="Left" Margin="20,0,0,0"/>
 
-            <!-- ダークモード切替ボタン（最終更新時刻の左側に配置） -->
-            <Button x:Name="ThemeToggleButton" Grid.Column="1" Width="40" Height="40" Margin="10,0,10,0"
+            <!-- ダークモード切替ボタン -->
+            <Button x:Name="ThemeToggleButton" Grid.Column="1" Width="40" Height="40" Margin="10,0,20,0"
                     Click="ThemeToggleButton_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -186,5 +194,12 @@
                 </ItemsControl>
             </ScrollViewer>
         </GroupBox>
+
+        <!-- 下部ステータスバー -->
+        <StatusBar Grid.Row="5" Background="White">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusMessage" Foreground="Black" Text=""/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
