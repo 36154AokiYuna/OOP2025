@@ -55,6 +55,32 @@ namespace TenkiApp {
             Loaded += CurrentLocationButton_Click;
         }
 
+        private bool isDarkMode = false;
+
+        private void ThemeToggleButton_Click(object sender, RoutedEventArgs e) {
+            if (isDarkMode) {
+                // ライトモードに戻す
+                this.Background = System.Windows.Media.Brushes.LightBlue; // フォーム背景を白に
+                FormName.Foreground = System.Windows.Media.Brushes.Black;
+                LastUpdatedText.Foreground = System.Windows.Media.Brushes.Black;
+
+                // アイコンを月に戻す
+                ThemeIcon.Source = new BitmapImage(new Uri("https://img.icons8.com/ios-filled/50/crescent-moon.png"));
+
+                isDarkMode = false;
+            } else {
+                // ダークモードに切り替え
+                this.Background = System.Windows.Media.Brushes.Black; // フォーム背景を黒に
+                FormName.Foreground = System.Windows.Media.Brushes.White;
+                LastUpdatedText.Foreground = System.Windows.Media.Brushes.White;
+
+                // アイコンを太陽に切り替え
+                ThemeIcon.Source = new BitmapImage(new Uri("https://img.icons8.com/ios-filled/50/sun--v1.png"));
+
+                isDarkMode = true;
+            }
+        }
+
         private async void SearchButton_Click(object sender, RoutedEventArgs e) {
             if (CityComboBox.SelectedItem is string city &&
                 CityCoordinates.TryGetValue(city, out var coords)) {
@@ -90,10 +116,12 @@ namespace TenkiApp {
         }
 
         private async Task GetWeatherAsync(double latitude, double longitude, string cityName) {
+
             string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}" +
-                         "&current=temperature_2m,wind_speed_10m,relative_humidity_2m,weather_code" +
-                         "&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,wind_speed_10m,weather_code" +
-                         "&timezone=auto";
+             "&current=temperature_2m,wind_speed_10m,relative_humidity_2m,weather_code" +
+             "&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,wind_speed_10m,weather_code" +
+             "&daily=temperature_2m_max,temperature_2m_min,weather_code" +
+             "&timezone=auto";
 
             using var http = new HttpClient();
 
@@ -129,6 +157,19 @@ namespace TenkiApp {
                         });
                     }
                     HourlyForecastPanel.ItemsSource = hourlyItems;
+
+                    if (weather?.daily != null) {
+                        var weeklyItems = new List<WeeklyForecastItem>();
+                        for (int i = 0; i < weather.daily.time.Count; i++) {
+                            weeklyItems.Add(new WeeklyForecastItem {
+                                Date = DateTime.Parse(weather.daily.time[i]).ToString("MM/dd"),
+                                TempMax = $"最高: {weather.daily.temperature_2m_max[i]}℃",
+                                TempMin = $"最低: {weather.daily.temperature_2m_min[i]}℃",
+                                Icon = GetWeatherIconUrl(weather.daily.weather_code[i])
+                            });
+                        }
+                        WeeklyForecastPanel.ItemsSource = weeklyItems;
+                    }
                 } else {
                     MessageBox.Show("天気データが取得できませんでした。");
                 }
@@ -174,9 +215,24 @@ namespace TenkiApp {
         }
     }
 
+    public class DailyForecast {
+        public List<string> time { get; set; }
+        public List<double> temperature_2m_max { get; set; }
+        public List<double> temperature_2m_min { get; set; }
+        public List<int> weather_code { get; set; }
+    }
+
+    public class WeeklyForecastItem {
+        public string Date { get; set; }
+        public string TempMax { get; set; }
+        public string TempMin { get; set; }
+        public string Icon { get; set; }
+    }
+
     public class WeatherResponse {
         public CurrentWeather current { get; set; }
         public HourlyForecast hourly { get; set; }
+        public DailyForecast daily { get; set; }
     }
 
     public class CurrentWeather {

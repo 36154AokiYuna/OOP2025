@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenkiApp"
         mc:Ignorable="d"
-        Title="TenkiApp" Height="480" Width="750"
+        Title="TenkiApp" Height="680" Width="750"
         Background="LightBlue">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -13,28 +13,52 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- 一行目：アプリ名 + 最終更新時刻 -->
+        <!-- 一行目：アプリ名 + ダークモード切替ボタン + 最終更新時刻 -->
         <Grid Grid.Row="0" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!-- 左側：アプリ名 -->
-            <TextBlock Text="お天気アプリ" 
-               FontSize="28" FontWeight="Bold"
-               HorizontalAlignment="Left"
-               Margin="20,0,0,0"/>
+            <TextBlock x:Name="FormName" Text="お天気アプリ" FontSize="28" FontWeight="Bold"
+                    HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+            <!-- ダークモード切替ボタン（最終更新時刻の左側に配置） -->
+            <Button x:Name="ThemeToggleButton" Grid.Column="1" Width="40" Height="40" Margin="10,0,10,0"
+                    Click="ThemeToggleButton_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="20" Background="White" BorderBrush="Gray" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- マウスオーバー時：少し明るく -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Silver"/>
+                            </Trigger>
+                            <!-- クリック時：縮んで押した感を出す -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+
+                <Image x:Name="ThemeIcon" Source="https://img.icons8.com/ios-filled/50/crescent-moon.png" Stretch="Uniform"/>
+            </Button>
 
             <!-- 右側：最終更新時刻 -->
-            <TextBlock x:Name="LastUpdatedText" 
-               Grid.Column="1"
-               FontSize="14" 
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Right"
-               Text="最終更新: --/-- --:--"/>
+            <TextBlock x:Name="LastUpdatedText" Grid.Column="2" FontSize="14" 
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="最終更新: --/-- --:--"/>
         </Grid>
 
         <!-- 二行目：都市選択 -->
@@ -46,8 +70,44 @@
             </GroupBox.Header>
             <StackPanel Orientation="Horizontal">
                 <ComboBox x:Name="CityComboBox" Width="200" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                <Button Content="検索" Width="80" Click="SearchButton_Click"/>
-                <Button Content="現在地取得" Width="80" Margin="10,0,0,0" Click="CurrentLocationButton_Click"/>
+
+                <!-- 検索ボタン -->
+                <Button Content="検索" Width="80" Height="40" Click="SearchButton_Click" Margin="0,0,10,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" CornerRadius="20" Background="LightGray" BorderBrush="Gray" BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Silver"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 現在地取得ボタン -->
+                <Button Content="現在地取得" Width="100" Height="40" Click="CurrentLocationButton_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" CornerRadius="20" Background="LightGray" BorderBrush="Gray" BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Silver"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </StackPanel>
         </GroupBox>
 
@@ -89,6 +149,36 @@
                                     <TextBlock Text="{Binding Time}" FontWeight="Bold" HorizontalAlignment="Center"/>
                                     <Image Source="{Binding Icon}" Width="32" Height="32" Margin="0,5"/>
                                     <TextBlock Text="{Binding Temperature}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- 五行目：1週間の予報 -->
+        <GroupBox Grid.Row="4" Padding="10" Background="White">
+            <GroupBox.Header>
+                <Border Background="White" Padding="2">
+                    <TextBlock Text="1週間の予報"/>
+                </Border>
+            </GroupBox.Header>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="WeeklyForecastPanel">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightGray" BorderThickness="1" Margin="5" Padding="5" Width="120">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Date}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <Image Source="{Binding Icon}" Width="32" Height="32" Margin="0,5"/>
+                                    <TextBlock Text="{Binding TempMax}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TempMin}" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
